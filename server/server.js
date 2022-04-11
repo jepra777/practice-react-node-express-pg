@@ -2,7 +2,11 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const app = express()
+const db = require("./models")
 
+db.sequelize.sync({force: true}).then(() => {
+    console.log("Drop and Re-Sync DB.")
+})
 var corsOpts = {
     origin: "http://localhost:3701"
 }
