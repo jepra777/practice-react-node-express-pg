@@ -4,6 +4,7 @@ const cors = require("cors")
 const app = express()
 const db = require("./models")
 
+
 db.sequelize.sync({force: true}).then(() => {
     console.log("Drop and Re-Sync DB.")
 })
@@ -25,6 +26,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.get("/", (req, res) => {
     res.json([{ "message": "Hi There it's me JePra"}])
 })
+
+require("./routes/tutorial.routes")(app);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
