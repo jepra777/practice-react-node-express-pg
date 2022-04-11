@@ -67,7 +67,7 @@ exports.findOne = (req, res) => {
 }
 
 //Update a Tutorial by the id in the request
-exports.delete = (req, res) => {
+exports.update = (req, res) => {
     const id = req.params.id;
   Tutorial.update(req.body, {
     where: { id: id }
@@ -91,7 +91,7 @@ exports.delete = (req, res) => {
 }
 
 //Deete a Tutorial with the specifed id in the request
-exports.deleteAll = (req, res) => {
+exports.delete = (req, res) => {
     const id = req.params.id;
     Tutorial.destroy({
       where: { id: id }
@@ -112,6 +112,23 @@ exports.deleteAll = (req, res) => {
           message: "Could not delete Tutorial with id=" + id
         });
       });
+}
+
+//Delete all Tutorials
+exports.deleteAll = (req, res) => {
+    Tutorial.destroy({
+        where: {},
+        truncate: false
+      })
+        .then(nums => {
+          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+        })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while removing all tutorials."
+          });
+        });
 }
 
 //Find all published Tutorials
